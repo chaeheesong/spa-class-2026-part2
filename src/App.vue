@@ -1,4 +1,6 @@
 <script setup>
+import { useFavoritesStore } from './stores/favorites.js';
+const favoritesStore = useFavoritesStore();
 </script>
 
 <template>
@@ -8,6 +10,10 @@
       <nav class="links">
         <router-link to="/">홈(Home)</router-link>
         <router-link to="/movies">영화 목록(Movies)</router-link>
+        <div class="favorite-stats">
+          <span class="badge count-badge">찜 {{ favoritesStore.totalFavorites }}</span>
+          <span v-if="favoritesStore.averageRating > 0" class="badge rating-badge">평균 평점: {{ favoritesStore.averageRating }}</span>
+        </div>
       </nav>
     </header>
     <router-view></router-view>
@@ -24,7 +30,8 @@
   background-color: #2c3e50;
   color: white;
 }
-.logo { display: flex; gap: 20px; }
+.logo { font-size: 24px; font-weight: bold; }
+.links { display: flex; gap: 20px; align-items: center; }
 .links a {
   color: #a1b1c1;
   text-decoration: none;
@@ -35,4 +42,8 @@
   color: #42b883;
   text-decoration: underline;
 }
+.favorite-stats { display: flex; gap: 10px; margin-left: 20px; }
+.badge { padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 14px; }
+.count-badge { background-color: #ff4757; color: white; }
+.rating-badge { background-color: #f1c40f; color: #333; }
 </style>
